@@ -25,6 +25,10 @@ def main() -> None:
     text = LINE.strip()
     assert 1 <= len(text) <= 159, f"entry is {len(text)} chars, must be 1-159"
     assert "\n" not in text, "entry must be a single line"
+    # Pure ASCII: the gate counts characters, and ASCII keeps one
+    # character equal to one byte, so the 159 cap can never be tripped
+    # by a multi-byte character.
+    assert text.isascii(), "entry must be plain ASCII"
     out_dir = "/output"
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
